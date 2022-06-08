@@ -230,10 +230,13 @@ do_install_azure_storage_sdk() {
         popd > /dev/null   
     fi
     
-    ${cmake_dir_path}/bin/cmake $CMAKE_OPTS "${azure_blob_storage_file_upload_utility_cmake_options[@]}" .. || return
+    set -x
+    echo CMAKOPTS: $CMAKE_OPTS
+    ${cmake_dir_path}/bin/cmake ${CMAKE_OPTS} "${azure_blob_storage_file_upload_utility_cmake_options[@]}" .. || return
+    set +x
 
-    ${cmake_dir_path}/bin/cmake --build . || return
-    $SUDO ${cmake_dir_path}/bin/cmake --build . --target install || return
+    make || return
+    $SUDO make install DESTDIR=/sysroot || return
 
     rm -fr ${cmake_dir_path}
     rm -fr ${cmake_tar_path}
