@@ -140,7 +140,7 @@ do_install_azure_iot_sdk() {
         azureiotsdkc_cmake_options+=("-Dskip_samples=ON")
     fi
 
-    cmake "${azureiotsdkc_cmake_options[@]}" .. || return
+    cmake $CMAKE_OPTS "${azureiotsdkc_cmake_options[@]}" .. || return
 
     cmake --build . || return
     $SUDO cmake --build . --target install || return
@@ -230,7 +230,7 @@ do_install_azure_storage_sdk() {
         popd > /dev/null   
     fi
     
-    ${cmake_dir_path}/bin/cmake "${azure_blob_storage_file_upload_utility_cmake_options[@]}" .. || return
+    ${cmake_dir_path}/bin/cmake $CMAKE_OPTS "${azure_blob_storage_file_upload_utility_cmake_options[@]}" .. || return
 
     ${cmake_dir_path}/bin/cmake --build . || return
     $SUDO ${cmake_dir_path}/bin/cmake --build . --target install || return
